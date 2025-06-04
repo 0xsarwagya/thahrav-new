@@ -1,3 +1,29 @@
+/*
+  # NextAuth.js Schema Setup
+  
+  1. Schema Creation
+    - Creates next_auth schema for authentication
+    - Grants necessary permissions to service_role and postgres
+  
+  2. Tables Created
+    - users: Stores user information
+      - Basic info (name, email)
+      - Email verification status
+      - Admin status
+    - sessions: Manages user sessions
+    - accounts: Stores OAuth account connections
+    - verification_tokens: Manages email verification
+  
+  3. Functions
+    - uid(): Helper function for Row Level Security
+      - Returns current user's UUID from JWT
+  
+  4. Security
+    - Includes foreign key constraints
+    - Proper permission grants
+    - Unique constraints where needed
+*/
+
 --
 -- Name: next_auth; Type: SCHEMA;
 --

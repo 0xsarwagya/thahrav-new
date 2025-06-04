@@ -1,3 +1,23 @@
+/*
+  # Product Schema Setup
+  
+  1. Enums
+    - gender: For product gender targeting (male, female, unisex)
+    - category: Product types (crew_tshirt, hoodie, cropped_hoodie, oversized_tshirt)
+    - size: Standard clothing sizes (xs through xxl)
+    - taxRate: GST rates for different product categories
+  
+  2. Tables
+    - product: Main product table with all product details
+      - Basic info (name, description, slug, sku)
+      - Pricing (price, discount, salePrice)
+      - Categorization (gender, category, size)
+      - Media (images array)
+      - Status flags (isNew, isFeatured, isOnSale, inStock)
+      - Tax info (taxRate)
+      - Timestamps (createdAt, updatedAt)
+*/
+
 -- Step 1: Create enums
 create type public.gender as enum ('male', 'female', 'unisex');
 create type public.category as enum ('crew_tshirt', 'hoodie', 'cropped_hoodie', 'oversized_tshirt');

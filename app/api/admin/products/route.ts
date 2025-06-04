@@ -1,6 +1,3 @@
 export const GET = async () => {
-    try {
-    } catch (error) {
-
-    }
-}
+	return new Response("Hello");
+};

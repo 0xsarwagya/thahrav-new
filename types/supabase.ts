@@ -179,6 +179,51 @@ export type Database = {
         }
         Relationships: []
       }
+      address: {
+        Row: {
+          country: string
+          created_at: string
+          id: string
+          is_billing: boolean
+          is_default: boolean
+          is_shipping: boolean
+          line1: string
+          line2: string | null
+          state: string
+          updated_at: string
+          user_id: string
+          zip: string
+        }
+        Insert: {
+          country: string
+          created_at?: string
+          id?: string
+          is_billing?: boolean
+          is_default?: boolean
+          is_shipping?: boolean
+          line1: string
+          line2?: string | null
+          state: string
+          updated_at?: string
+          user_id: string
+          zip: string
+        }
+        Update: {
+          country?: string
+          created_at?: string
+          id?: string
+          is_billing?: boolean
+          is_default?: boolean
+          is_shipping?: boolean
+          line1?: string
+          line2?: string | null
+          state?: string
+          updated_at?: string
+          user_id?: string
+          zip?: string
+        }
+        Relationships: []
+      }
       product: {
         Row: {
           category: Database["public"]["Enums"]["category"] | null

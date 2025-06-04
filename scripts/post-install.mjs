@@ -233,6 +233,8 @@ const main = async () => {
 
 	await runMigrations();
 
+	await generateTypes();
+
 	await getProducts();
 };
 
