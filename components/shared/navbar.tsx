@@ -9,7 +9,7 @@ import {
 	NavigationMenuList,
 	NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Instagram, Menu, MoveRight, ShoppingCart, X } from "lucide-react";
+import { MoveRight } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils/client";
@@ -26,120 +26,230 @@ import {
 import { Separator } from "../ui/separator";
 import { InstagramIcon, FacebookIcon, TwitterIcon } from "lucide-react";
 
+const navigationItems = [
+	{
+		title: "Home",
+		href: "/",
+		description: "Return to the homepage",
+	},
+	{
+		title: "Shop",
+		description: "Explore our collection, find your perfect fit.",
+		items: [
+			{
+				title: "Men's Collection",
+				href: "/shop?category=mens",
+				description: "Stylish apparel for men",
+			},
+			{
+				title: "Women's Collection",
+				href: "/shop?category=womens",
+				description: "Elegant designs for women",
+			},
+			{
+				title: "Unisex Collection",
+				href: "/shop?category=unisex",
+				description: "Versatile styles for everyone",
+			},
+			{
+				title: "Special Offers",
+				href: "/shop?hasOffers=true",
+				description: "Exclusive deals and discounts",
+			},
+		],
+	},
+	{
+		title: "About",
+		href: "/about",
+		description: "Learn about our story and mission",
+	},
+	{
+		title: "Blog",
+		href: "/journal",
+		description: "Read our latest articles and updates",
+	},
+	{
+		title: "Contact",
+		href: "/contact",
+		description: "Get in touch with our team",
+	},
+];
+
+const socialLinks = [
+	{
+		title: "Follow us on Instagram",
+		href: "https://www.instagram.com",
+		icon: <InstagramIcon className="size-4" />,
+	},
+	{
+		title: "Connect on Facebook",
+		href: "https://www.facebook.com",
+		icon: <FacebookIcon className="size-4" />,
+	},
+	{
+		title: "Follow us on Twitter",
+		href: "https://www.twitter.com",
+		icon: <TwitterIcon className="size-4" />,
+	},
+];
+
 export const Navbar = () => {
-	const navigationItems = [
-		{
-			title: "Home",
-			href: "/",
-		},
-		{
-			title: "Shop",
-			description: "Explore our collection, find your perfect fit.",
-			items: [
-				{
-					title: "Mens",
-					href: "/shop?category=mens",
-				},
-				{
-					title: "Womens",
-					href: "/shop?category=womens",
-				},
-				{
-					title: "Unisex",
-					href: "/shop?category=unisex",
-				},
-				{
-					title: "Offers",
-					href: "/shop?hasOffers=true",
-				},
-			],
-		},
-		{
-			title: "About",
-			href: "/about",
-		},
-		{
-			title: "Blog",
-			href: "/journal",
-		},
-		{
-			title: "Contact",
-			href: "/contact",
-		},
-	];
-
-	const socialLinks = [
-		{
-			title: "Instagram",
-			href: "https://www.instagram.com",
-			icon: <InstagramIcon className="w-4 h-4" />,
-		},
-		{
-			title: "Facebook",
-			href: "https://www.facebook.com",
-			icon: <FacebookIcon className="w-4 h-4" />,
-		},
-		{
-			title: "Twitter",
-			href: "https://www.twitter.com",
-			icon: <TwitterIcon className="w-4 h-4" />,
-		},
-	];
-
 	const [isOpen, setOpen] = useState(false);
+
 	return (
-		<header className="w-full bg-background border-b border-border px-4 md:px-0">
-			<div className="container relative mx-auto min-h-20 flex gap-4 flex-row lg:grid lg:grid-cols-3 items-center">
-				<div className="justify-start items-center gap-4 lg:flex hidden flex-row">
-					<NavigationMenu className="flex justify-start items-start">
-						<NavigationMenuList className="flex justify-start gap-2 flex-row">
+		<header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+			<nav className="container relative mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
+				<div className="flex lg:hidden">
+					<Sheet open={isOpen} onOpenChange={setOpen}>
+						<SheetTrigger asChild>
+							<Button
+								variant="ghost"
+								size="icon"
+								className="shrink-0"
+								aria-label="Open menu"
+							>
+								<svg
+									className="size-5"
+									fill="none"
+									height="24"
+									stroke="currentColor"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth="2"
+									viewBox="0 0 24 24"
+									width="24"
+								>
+									<line x1="3" x2="21" y1="6" y2="6" />
+									<line x1="3" x2="21" y1="12" y2="12" />
+									<line x1="3" x2="21" y1="18" y2="18" />
+								</svg>
+							</Button>
+						</SheetTrigger>
+						<SheetContent side="left" className="w-[300px] sm:w-[400px]">
+							<SheetHeader>
+								<SheetTitle>
+									<AppLogo />
+								</SheetTitle>
+								<Separator />
+							</SheetHeader>
+							<nav className="flex flex-col gap-4 p-6">
+								{navigationItems.map((item) => (
+									<div key={item.title} className="space-y-3">
+										{item.href ? (
+											<Link
+												href={item.href}
+												className="flex items-center justify-between text-base font-medium text-foreground/80 transition-colors hover:text-foreground"
+												onClick={() => setOpen(false)}
+											>
+												<span>{item.title}</span>
+												<MoveRight className="size-4" />
+											</Link>
+										) : (
+											<>
+												<div className="flex items-center justify-between">
+													<span className="text-base font-medium">{item.title}</span>
+												</div>
+												<ul className="space-y-3 border-l pl-6">
+													{item.items?.map((subItem) => (
+														<li key={subItem.title}>
+															<Link
+																href={subItem.href}
+																className="flex items-center justify-between text-sm text-muted-foreground transition-colors hover:text-foreground"
+																onClick={() => setOpen(false)}
+															>
+																<span>{subItem.title}</span>
+																<MoveRight className="size-4" />
+															</Link>
+														</li>
+													))}
+												</ul>
+											</>
+										)}
+									</div>
+								))}
+							</nav>
+							<SheetFooter className="flex-row justify-start gap-2 p-6">
+								{socialLinks.map((link) => (
+									<Link
+										key={link.title}
+										href={link.href}
+										className={buttonVariants({
+											variant: "ghost",
+											size: "icon",
+										})}
+										aria-label={link.title}
+									>
+										{link.icon}
+									</Link>
+								))}
+							</SheetFooter>
+						</SheetContent>
+					</Sheet>
+				</div>
+
+				<div className="hidden lg:flex lg:gap-10">
+					<AppLogo />
+					<NavigationMenu className="hidden lg:flex">
+						<NavigationMenuList>
 							{navigationItems.map((item) => (
 								<NavigationMenuItem key={item.title}>
 									{item.href ? (
-										<>
-											<NavigationMenuLink>
-												<Button variant="ghost">{item.title}</Button>
+										<Link href={item.href} legacyBehavior passHref>
+											<NavigationMenuLink
+												className={cn(
+													buttonVariants({ variant: "ghost" }),
+													"text-sm font-medium"
+												)}
+											>
+												{item.title}
 											</NavigationMenuLink>
-										</>
+										</Link>
 									) : (
 										<>
-											<NavigationMenuTrigger className="font-medium text-sm">
+											<NavigationMenuTrigger className="text-sm font-medium">
 												{item.title}
 											</NavigationMenuTrigger>
-											<NavigationMenuContent className="!w-[450px] p-4">
-												<div className="flex flex-col lg:grid grid-cols-2 gap-4">
-													<div className="flex flex-col h-full justify-between">
-														<div className="flex flex-col">
-															<p className="text-base">{item.title}</p>
-															<p className="text-muted-foreground text-sm">
+											<NavigationMenuContent>
+												<div className="grid w-[600px] gap-3 p-4 md:grid-cols-2">
+													<div className="flex flex-col justify-between">
+														<div>
+															<h3 className="text-base font-medium">{item.title}</h3>
+															<p className="text-sm text-muted-foreground">
 																{item.description}
 															</p>
 														</div>
 														<Link
-															href={"/shop"}
+															href="/shop"
 															className={cn(
-																"mt-10",
 																buttonVariants({
 																	variant: "default",
 																	size: "sm",
 																}),
+																"mt-4"
 															)}
 														>
-															Shop now
+															Browse all
 														</Link>
 													</div>
-													<div className="flex flex-col text-sm h-full justify-end">
+													<ul className="grid gap-2">
 														{item.items?.map((subItem) => (
-															<NavigationMenuLink
-																href={subItem.href}
-																key={subItem.title}
-																className="flex flex-row justify-between items-center hover:bg-muted py-2 px-4 rounded"
-															>
-																<span>{subItem.title}</span>
-																<MoveRight className="w-4 h-4 text-muted-foreground" />
-															</NavigationMenuLink>
+															<li key={subItem.title}>
+																<NavigationMenuLink asChild>
+																	<Link
+																		href={subItem.href}
+																		className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+																	>
+																		<div className="text-sm font-medium leading-none">
+																			{subItem.title}
+																		</div>
+																		<p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+																			{subItem.description}
+																		</p>
+																	</Link>
+																</NavigationMenuLink>
+															</li>
 														))}
-													</div>
+													</ul>
 												</div>
 											</NavigationMenuContent>
 										</>
@@ -149,73 +259,26 @@ export const Navbar = () => {
 						</NavigationMenuList>
 					</NavigationMenu>
 				</div>
-				<AppLogo className="flex lg:justify-center" />
-				<div className="flex justify-end w-full gap-4">
+
+				<div className="flex items-center gap-4">
+					<div className="hidden lg:flex lg:gap-4">
+						{socialLinks.map((link) => (
+							<Link
+								key={link.title}
+								href={link.href}
+								className={buttonVariants({
+									variant: "ghost",
+									size: "icon",
+								})}
+								aria-label={link.title}
+							>
+								{link.icon}
+							</Link>
+						))}
+					</div>
 					<CartView />
 				</div>
-				<div className="flex w-12 shrink lg:hidden items-end justify-end">
-					<Sheet open={isOpen} onOpenChange={setOpen}>
-						<SheetTrigger>
-							<Menu className="w-5 h-5" />
-						</SheetTrigger>
-						<SheetContent side={"top"} className="px-4">
-							<SheetHeader>
-								<SheetTitle>
-									<AppLogo />
-								</SheetTitle>
-								<Separator />
-							</SheetHeader>
-							{navigationItems.map((item) => (
-								<div key={item.title}>
-									<div className="flex flex-col gap-2">
-										{item.href ? (
-											<Link
-												href={item.href}
-												className="flex justify-between items-center"
-											>
-												<span className="text-base">{item.title}</span>
-												<MoveRight className="w-4 h-4 stroke-1 text-muted-foreground" />
-											</Link>
-										) : (
-											<p className="text-base">{item.title}</p>
-										)}
-										<ul className="flex flex-col gap-2">
-											{item.items?.map((subItem) => (
-												<li key={subItem.title}>
-													<Link
-														href={subItem.href}
-														className="flex justify-between items-center"
-													>
-														<span className="text-muted-foreground text-sm">
-															{subItem.title}
-														</span>
-														<MoveRight className="w-4 h-4 stroke-1" />
-													</Link>
-												</li>
-											))}
-										</ul>
-									</div>
-								</div>
-							))}
-							<Separator />
-							<SheetFooter className="flex justify-start flex-row items-start gap-2">
-								{socialLinks.map((link) => (
-									<Link
-										href={link.href}
-										key={link.title}
-										className={buttonVariants({
-											variant: "ghost",
-											size: "icon",
-										})}
-									>
-										{link.icon}
-									</Link>
-								))}
-							</SheetFooter>
-						</SheetContent>
-					</Sheet>
-				</div>
-			</div>
+			</nav>
 		</header>
 	);
 };
