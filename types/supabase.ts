@@ -226,13 +226,14 @@ export type Database = {
       }
       product: {
         Row: {
+          artform: Database["public"]["Enums"]["artform_enum"]
           category: Database["public"]["Enums"]["category"] | null
           created_at: string
-          description: string | null
+          description: string
           discount: number | null
           gender: Database["public"]["Enums"]["gender"] | null
           id: number
-          images: string[] | null
+          images: string[]
           in_stock: boolean | null
           is_featured: boolean | null
           is_new: boolean | null
@@ -240,20 +241,22 @@ export type Database = {
           name: string
           price: number
           sale_price: number | null
-          size: Database["public"]["Enums"]["size"] | null
+          size: Database["public"]["Enums"]["size"][] | null
           sku: string
           slug: string
+          story: string
           tax_rate: Database["public"]["Enums"]["taxrate"] | null
           updated_at: string
         }
         Insert: {
+          artform?: Database["public"]["Enums"]["artform_enum"]
           category?: Database["public"]["Enums"]["category"] | null
           created_at?: string
-          description?: string | null
+          description?: string
           discount?: number | null
           gender?: Database["public"]["Enums"]["gender"] | null
           id?: number
-          images?: string[] | null
+          images?: string[]
           in_stock?: boolean | null
           is_featured?: boolean | null
           is_new?: boolean | null
@@ -261,20 +264,22 @@ export type Database = {
           name: string
           price: number
           sale_price?: number | null
-          size?: Database["public"]["Enums"]["size"] | null
+          size?: Database["public"]["Enums"]["size"][] | null
           sku: string
           slug: string
+          story?: string
           tax_rate?: Database["public"]["Enums"]["taxrate"] | null
           updated_at?: string
         }
         Update: {
+          artform?: Database["public"]["Enums"]["artform_enum"]
           category?: Database["public"]["Enums"]["category"] | null
           created_at?: string
-          description?: string | null
+          description?: string
           discount?: number | null
           gender?: Database["public"]["Enums"]["gender"] | null
           id?: number
-          images?: string[] | null
+          images?: string[]
           in_stock?: boolean | null
           is_featured?: boolean | null
           is_new?: boolean | null
@@ -282,9 +287,10 @@ export type Database = {
           name?: string
           price?: number
           sale_price?: number | null
-          size?: Database["public"]["Enums"]["size"] | null
+          size?: Database["public"]["Enums"]["size"][] | null
           sku?: string
           slug?: string
+          story?: string
           tax_rate?: Database["public"]["Enums"]["taxrate"] | null
           updated_at?: string
         }
@@ -301,6 +307,12 @@ export type Database = {
       }
     }
     Enums: {
+      artform_enum:
+        | "madhubani"
+        | "pattachitra"
+        | "pichwai"
+        | "kalighat"
+        | "gond"
       category: "crew_tshirt" | "hoodie" | "cropped_hoodie" | "oversized_tshirt"
       gender: "male" | "female" | "unisex"
       size: "xs" | "s" | "m" | "l" | "xl" | "xxl"
@@ -423,6 +435,7 @@ export const Constants = {
   },
   public: {
     Enums: {
+      artform_enum: ["madhubani", "pattachitra", "pichwai", "kalighat", "gond"],
       category: ["crew_tshirt", "hoodie", "cropped_hoodie", "oversized_tshirt"],
       gender: ["male", "female", "unisex"],
       size: ["xs", "s", "m", "l", "xl", "xxl"],
